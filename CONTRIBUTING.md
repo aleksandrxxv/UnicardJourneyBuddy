@@ -3,8 +3,8 @@
 ## Branches
 
 - `main` — always demo-able. Only merged via pull request.
-- `develop` — integration branch for the current sprint.
-- Feature branches from `develop`, named after the Trello card:
+- `dev` — integration branch for the current sprint.
+- Feature branches from `dev`, named after the Trello card:
   `feature/US-07-step-by-step-guidance`, `fix/US-12-sos-button-crash`, `docs/architecture-v1`, `spike/tfl-api`.
 
 ## Commits
