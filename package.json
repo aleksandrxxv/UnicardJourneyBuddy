@@ -1,0 +1,21 @@
+{
+  "name": "unicard-journey-buddy",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Proof-of-concept mobile app and parent portal that help children aged 8-14 travel independently by public transport.",
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "scripts": {
+    "mobile": "npm run start -w @journeybuddy/mobile",
+    "portal": "npm run dev -w @journeybuddy/portal",
+    "api": "npm run dev -w @journeybuddy/api",
+    "build": "npm run build -w @journeybuddy/shared && npm run build -w @journeybuddy/api && npm run build -w @journeybuddy/portal",
+    "typecheck": "npm run typecheck --workspaces --if-present",
+    "test": "npm run test --workspaces --if-present"
+  },
+  "engines": {
+    "node": ">=22"
+  }
+}
