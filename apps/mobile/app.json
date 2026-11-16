@@ -21,6 +21,19 @@
     "web": {
       "favicon": "./assets/favicon.png"
     },
-    "scheme": "journeybuddy"
+    "scheme": "journeybuddy",
+    "plugins": [
+      "expo-router",
+      "expo-status-bar",
+      [
+        "expo-location",
+        {
+          "locationWhenInUsePermission": "Journey Buddy uses your location to plan your trip from where you are."
+        }
+      ]
+    ],
+    "experiments": {
+      "typedRoutes": true
+    }
   }
 }
