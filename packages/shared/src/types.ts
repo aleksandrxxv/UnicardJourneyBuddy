@@ -56,3 +56,15 @@ export interface JourneyEvent {
   timestamp: string; // ISO 8601
   location?: Coordinates;
 }
+
+// --- API contracts ---
+
+export interface PlanJourneyRequest {
+  childId: string;
+  destinationId: string;
+  from: Coordinates;
+}
+
+export interface ApiError {
+  error: string;
+}
