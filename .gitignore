@@ -34,3 +34,8 @@ npm-debug.log*
 firebase-debug.log
 firestore-debug.log
 ui-debug.log
+
+# OpenTripPlanner jar, downloaded data and built graph
+otp/*.jar
+otp/data/*
+!otp/data/build-config.json

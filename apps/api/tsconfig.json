@@ -1,10 +1,11 @@
 {
   "compilerOptions": {
     "target": "ES2022",
-    "module": "NodeNext",
-    "moduleResolution": "NodeNext",
-    "outDir": "dist",
-    "rootDir": "src",
+    // The API runs with tsx (dev and start), which resolves the TypeScript-only
+    // @journeybuddy/shared package. tsc is used for type checking only.
+    "module": "ESNext",
+    "moduleResolution": "Bundler",
+    "noEmit": true,
     "strict": true,
     "esModuleInterop": true,
     "skipLibCheck": true

@@ -14,7 +14,10 @@
     "build": "npm run build -w @journeybuddy/shared && npm run build -w @journeybuddy/api && npm run build -w @journeybuddy/portal",
     "typecheck": "npm run typecheck --workspaces --if-present",
     "test": "npm run test --workspaces --if-present",
-    "emulators": "firebase emulators:start --project demo-journeybuddy"
+    "emulators": "firebase emulators:start --project demo-journeybuddy",
+    "otp:download": "bash otp/download.sh",
+    "otp:build": "bash otp/build.sh",
+    "otp": "bash otp/serve.sh"
   },
   "engines": {
     "node": ">=22"

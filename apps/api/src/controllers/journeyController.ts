@@ -1,4 +1,4 @@
-import type { PlanJourneyRequest } from '@journeybuddy/shared';
+import type { JourneySearchRequest, PlanJourneyRequest } from '@journeybuddy/shared';
 import type { Request, Response } from 'express';
 import { HttpError } from '../errors.js';
 import { currentUser } from '../middleware/auth.js';
@@ -17,6 +17,21 @@ export function createJourneyController(journeys: JourneyService) {
         throw new HttpError(400, 'childId, destinationId and from {lat, lng} are required');
       }
       res.json(await journeys.plan(currentUser(req), childId, destinationId, from));
+    },
+
+    /** Locations are used for this one search only and are not stored or logged. */
+    async search(req: Request, res: Response) {
+      const { from, to, destinationLabel, time, arriveBy } = (req.body ?? {}) as Partial<JourneySearchRequest>;
+      if (!isCoordinates(from) || !isCoordinates(to)) throw new HttpError(400, 'from and to {lat, lng} are required');
+      const when = time ? new Date(time) : new Date();
+      if (Number.isNaN(when.getTime())) throw new HttpError(400, 'time must be an ISO 8601 date');
+      res.json(
+        await journeys.search(from, to, {
+          time: when,
+          arriveBy: arriveBy === true,
+          destinationLabel: typeof destinationLabel === 'string' ? destinationLabel.slice(0, 40) : undefined,
+        }),
+      );
     },
   };
 }

@@ -1,4 +1,11 @@
-import type { Journey, MeResponse, PlanJourneyRequest, SavedDestination } from '@journeybuddy/shared';
+import type {
+  Journey,
+  JourneySearchRequest,
+  JourneySearchResponse,
+  MeResponse,
+  PlanJourneyRequest,
+  SavedDestination,
+} from '@journeybuddy/shared';
 import Constants from 'expo-constants';
 import { signInAnonymously } from 'firebase/auth';
 import { auth } from './firebase';
@@ -48,7 +55,23 @@ async function request<T>(path: string, init?: RequestInit): Promise<T> {
   return res.json() as Promise<T>;
 }
 
+/** Route search needs no sign-in (the API stores nothing about it). */
+async function publicRequest<T>(path: string, body: unknown): Promise<T> {
+  const controller = new AbortController();
+  const timer = setTimeout(() => controller.abort(), 12_000);
+  const res = await fetch(`${baseUrl}${path}`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(body),
+    signal: controller.signal,
+  }).finally(() => clearTimeout(timer));
+  if (!res.ok) throw new ApiError(res.status, `Request failed (${res.status})`);
+  return res.json() as Promise<T>;
+}
+
 export const api = {
+  searchJourney: (body: JourneySearchRequest) => publicRequest<JourneySearchResponse>('/journeys/search', body),
+
   me: () => request<MeResponse>('/me'),
 
   claimPairingCode: (code: string) =>

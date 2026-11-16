@@ -4,12 +4,9 @@ import { cardStyle } from '@/components/JourneyRow';
 import { PlaceGrid } from '@/components/PlaceGrid';
 import { PlaceTile, placeIconName } from '@/components/PlaceTile';
 import { Avatar, Header, HelpButton, Icon, Screen } from '@/components/ui';
-import { DEMO_START_LOCATION } from '@/constants/demo';
 import { useHelp } from '@/hooks/useHelp';
 import { useProfile } from '@/profile/ProfileContext';
 import type { Place } from '@/profile/types';
-import { busSummary } from '@/services/journeySummary';
-import { planMockJourney } from '@/services/mockJourneyPlanner';
 import { palette, type } from '@/theme';
 import { useColors } from '@/theme/ThemeContext';
 
@@ -56,7 +53,7 @@ export default function Home() {
             Go again
           </Text>
           {recent.map((p) => (
-            <QuickTrip key={p.id} place={p} onPress={() => openPlace(p)} />
+            <QuickTrip key={p.id} place={p} summary={profile.tripSummaries?.[p.id]} onPress={() => openPlace(p)} />
           ))}
         </>
       )}
@@ -64,9 +61,8 @@ export default function Home() {
   );
 }
 
-function QuickTrip({ place, onPress }: { place: Place; onPress: () => void }) {
+function QuickTrip({ place, summary = place.area ?? place.postcode, onPress }: { place: Place; summary?: string; onPress: () => void }) {
   const colors = useColors();
-  const summary = busSummary(planMockJourney(DEMO_START_LOCATION, place.location, place, new Date()));
   return (
     <Pressable accessibilityRole="button" accessibilityLabel={`${place.label}, ${summary}`} onPress={onPress} style={[cardStyle, styles.quickTrip]}>
       <View style={[styles.quickIcon, { backgroundColor: colors.brandSoft }]}>
