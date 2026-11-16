@@ -1,5 +1,7 @@
-import type { Journey, PlanJourneyRequest, SavedDestination } from '@journeybuddy/shared';
+import type { Journey, MeResponse, PlanJourneyRequest, SavedDestination } from '@journeybuddy/shared';
 import Constants from 'expo-constants';
+import { signInAnonymously } from 'firebase/auth';
+import { auth } from './firebase';
 
 const API_PORT = 4000;
 
@@ -15,16 +17,43 @@ function resolveBaseUrl(): string {
 
 const baseUrl = resolveBaseUrl();
 
+export class ApiError extends Error {
+  constructor(
+    readonly status: number,
+    message: string,
+  ) {
+    super(message);
+  }
+}
+
+/** The child's phone signs in anonymously; no email or password (ADR-0003). */
+async function idToken(): Promise<string> {
+  const user = auth.currentUser ?? (await signInAnonymously(auth)).user;
+  return user.getIdToken();
+}
+
 async function request<T>(path: string, init?: RequestInit): Promise<T> {
   const res = await fetch(`${baseUrl}${path}`, {
     ...init,
-    headers: { 'Content-Type': 'application/json', ...init?.headers },
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${await idToken()}`,
+      ...init?.headers,
+    },
   });
-  if (!res.ok) throw new Error(`Request failed (${res.status})`);
+  if (!res.ok) {
+    const body = (await res.json().catch(() => null)) as { error?: string } | null;
+    throw new ApiError(res.status, body?.error ?? `Request failed (${res.status})`);
+  }
   return res.json() as Promise<T>;
 }
 
 export const api = {
+  me: () => request<MeResponse>('/me'),
+
+  claimPairingCode: (code: string) =>
+    request<MeResponse>('/pairing/claim', { method: 'POST', body: JSON.stringify({ code }) }),
+
   approvedDestinations: (childId: string) =>
     request<SavedDestination[]>(`/children/${encodeURIComponent(childId)}/destinations`),
 
