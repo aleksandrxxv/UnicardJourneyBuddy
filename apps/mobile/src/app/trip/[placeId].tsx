@@ -39,7 +39,7 @@ function PlanTripForm({ place }: { place: Place }) {
 
   const time = when === 'now' ? now : chosen;
   const mode = when === 'arriveBy' ? 'arriveBy' : 'leaveAt';
-  const { journey, source, loading } = useJourney(place, time, mode);
+  const { journey, source, loading, startsFromHome } = useJourney(place, time, mode);
 
   return (
     <Screen
@@ -93,7 +93,7 @@ function PlanTripForm({ place }: { place: Place }) {
         <Text style={[type.display, styles.ink]}>{shortTime(journey.startTime)}</Text>
         <Text style={[type.bodyBold, styles.ink]}>You will arrive at about {shortTime(journey.arrivalTime)}</Text>
       </View>
-      <SourceNote source={source} loading={loading} />
+      <SourceNote source={source} loading={loading} startsFromHome={startsFromHome} />
     </Screen>
   );
 }

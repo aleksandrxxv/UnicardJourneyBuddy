@@ -31,7 +31,7 @@ export default function Route() {
 function RouteList({ place, time, mode }: { place: Place; time: Date; mode: 'leaveAt' | 'arriveBy' }) {
   const { recordTrip } = useProfile();
   const help = useHelp();
-  const { journey, source, loading } = useJourney(place, time, mode);
+  const { journey, source, loading, startsFromHome } = useJourney(place, time, mode);
 
   const start = async () => {
     await recordTrip(place.id, busSummary(journey));
@@ -62,7 +62,7 @@ function RouteList({ place, time, mode }: { place: Place; time: Date; mode: 'lea
           detail={legDetail(leg, i === journey.legs.length - 1)}
         />
       ))}
-      <SourceNote source={source} loading={loading} />
+      <SourceNote source={source} loading={loading} startsFromHome={startsFromHome} />
     </Screen>
   );
 }

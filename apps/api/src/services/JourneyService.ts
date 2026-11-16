@@ -16,6 +16,7 @@ export class JourneyService {
     try {
       const [best] = await this.live.planJourney(from, to, options);
       if (best) return { journey: best, source: 'live' };
+      console.warn('No live journey found (start or end may be outside the timetable area), using sample');
     } catch (err) {
       console.warn(`Live journey planning unavailable, using sample: ${(err as Error).message}`);
     }

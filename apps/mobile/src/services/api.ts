@@ -57,12 +57,14 @@ async function request<T>(path: string, init?: RequestInit): Promise<T> {
 
 /** Route search needs no sign-in (the API stores nothing about it). */
 async function publicRequest<T>(path: string, body: unknown): Promise<T> {
+  const controller = new AbortController();
+  const timer = setTimeout(() => controller.abort(), 12_000);
   const res = await fetch(`${baseUrl}${path}`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(body),
-    signal: AbortSignal.timeout(12_000),
-  });
+    signal: controller.signal,
+  }).finally(() => clearTimeout(timer));
   if (!res.ok) throw new ApiError(res.status, `Request failed (${res.status})`);
   return res.json() as Promise<T>;
 }

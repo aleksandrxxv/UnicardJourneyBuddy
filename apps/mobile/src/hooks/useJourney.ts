@@ -1,5 +1,7 @@
 import { planSampleJourney, type Journey } from '@journeybuddy/shared';
 import { useEffect, useState } from 'react';
+import { DEMO_START_LOCATION, inCoverageArea } from '@/constants/demo';
+import { useProfile } from '@/profile/ProfileContext';
 import type { Place } from '@/profile/types';
 import { api } from '@/services/api';
 import { useStartLocation } from './useStartLocation';
@@ -10,6 +12,8 @@ interface Result {
   journey: Journey;
   source: JourneySource;
   loading: boolean;
+  /** True when the phone is outside Birmingham, so the trip starts from Home instead (for testing). */
+  startsFromHome: boolean;
 }
 
 // Plan trip and Route ask for the same journey; keep the answer so both screens agree.
@@ -20,7 +24,11 @@ const cache = new Map<string, { journey: Journey; source: JourneySource }>();
  * loading and if the API can't be reached, so the app always has something to show.
  */
 export function useJourney(place: Place, time: Date, mode: 'leaveAt' | 'arriveBy'): Result {
-  const from = useStartLocation();
+  const here = useStartLocation();
+  const { profile } = useProfile();
+  const home = profile?.places.find((p) => p.icon === 'home');
+  const startsFromHome = !inCoverageArea(here);
+  const from = startsFromHome ? (home && home.id !== place.id ? home.location : DEMO_START_LOCATION) : here;
   // Re-ask at most once a minute, so "Leave now" doesn't refetch on every clock tick.
   const minute = Math.floor(time.getTime() / 60_000);
   const key = `${place.id}|${minute}|${mode}|${from.lat.toFixed(3)},${from.lng.toFixed(3)}`;
@@ -63,5 +71,6 @@ export function useJourney(place: Place, time: Date, mode: 'leaveAt' | 'arriveBy
     journey: result?.journey ?? planSampleJourney(from, place.location, place, time, mode),
     source: result?.source ?? 'sample',
     loading,
+    startsFromHome,
   };
 }

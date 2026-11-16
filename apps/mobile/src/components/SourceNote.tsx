@@ -3,7 +3,16 @@ import type { JourneySource } from '@/hooks/useJourney';
 import { palette, type } from '@/theme';
 
 /** Tells testers whether times are real timetables or the sample journey. */
-export function SourceNote({ source, loading }: { source: JourneySource; loading: boolean }) {
+interface Props {
+  source: JourneySource;
+  loading: boolean;
+  startsFromHome?: boolean;
+}
+
+export function SourceNote({ source, loading, startsFromHome }: Props) {
+  const away = startsFromHome ? (
+    <Text style={[type.small, styles.text]}>You are not in Birmingham, so this trip starts from Home.</Text>
+  ) : null;
   if (loading) {
     return (
       <View style={styles.row}>
@@ -12,8 +21,13 @@ export function SourceNote({ source, loading }: { source: JourneySource; loading
       </View>
     );
   }
-  if (source === 'live') return null;
-  return <Text style={[type.small, styles.text]}>Sample times — live bus times are not available right now.</Text>;
+  if (source === 'live') return away;
+  return (
+    <>
+      {away}
+      <Text style={[type.small, styles.text]}>Sample times — live bus times are not available right now.</Text>
+    </>
+  );
 }
 
 const styles = StyleSheet.create({
