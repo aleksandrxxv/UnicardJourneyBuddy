@@ -13,9 +13,13 @@
     "api": "npm run dev -w @journeybuddy/api",
     "build": "npm run build -w @journeybuddy/shared && npm run build -w @journeybuddy/api && npm run build -w @journeybuddy/portal",
     "typecheck": "npm run typecheck --workspaces --if-present",
-    "test": "npm run test --workspaces --if-present"
+    "test": "npm run test --workspaces --if-present",
+    "emulators": "firebase emulators:start --project demo-journeybuddy"
   },
   "engines": {
     "node": ">=22"
+  },
+  "devDependencies": {
+    "firebase-tools": "^15.36.0"
   }
 }

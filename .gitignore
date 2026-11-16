@@ -28,3 +28,9 @@ npm-debug.log*
 
 # Expo
 .expo/
+
+# Firebase emulator data and logs
+.firebase-data/
+firebase-debug.log
+firestore-debug.log
+ui-debug.log

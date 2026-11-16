@@ -68,3 +68,21 @@ export interface PlanJourneyRequest {
 export interface ApiError {
   error: string;
 }
+
+// --- Accounts & pairing (US-15, US-16) ---
+
+export interface ChildProfile {
+  id: string;
+  name: string;
+  pairedDevices: number;
+}
+
+export interface PairingCode {
+  code: string;
+  expiresAt: string; // ISO 8601
+}
+
+export type MeResponse =
+  | { role: 'parent'; email?: string }
+  | { role: 'child'; child: Pick<ChildProfile, 'id' | 'name'> }
+  | { role: 'unpaired' };
