@@ -39,7 +39,7 @@ interface ProfileContextValue {
   signOut: () => Promise<void>;
   addPlace: (place: Place) => Promise<void>;
   addHelper: (helper: Helper) => Promise<void>;
-  recordTrip: (placeId: string) => Promise<void>;
+  recordTrip: (placeId: string, summary: string) => Promise<void>;
 }
 
 const ProfileContext = createContext<ProfileContextValue | null>(null);
@@ -101,8 +101,12 @@ export function ProfileProvider({ children }: { children: ReactNode }) {
       signOut: () => persist(profiles, null),
       addPlace: (place) => updateProfile((p) => ({ ...p, places: [...p.places, place] })),
       addHelper: (helper) => updateProfile((p) => ({ ...p, helpers: [...p.helpers, helper] })),
-      recordTrip: (placeId) =>
-        updateProfile((p) => ({ ...p, recentTrips: [placeId, ...p.recentTrips.filter((id) => id !== placeId)].slice(0, 3) })),
+      recordTrip: (placeId, summary) =>
+        updateProfile((p) => ({
+          ...p,
+          recentTrips: [placeId, ...p.recentTrips.filter((id) => id !== placeId)].slice(0, 3),
+          tripSummaries: { ...p.tripSummaries, [placeId]: summary },
+        })),
     }),
     [ready, profile, draft, profiles, persist, updateProfile],
   );

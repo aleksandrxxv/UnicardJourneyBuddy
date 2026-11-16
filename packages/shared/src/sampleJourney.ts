@@ -1,7 +1,7 @@
-import type { Coordinates, Journey, JourneyLeg } from '@journeybuddy/shared';
+import type { Coordinates, Journey, JourneyLeg } from './types';
 
-// Mock only: a fixed walk → bus 45 → walk → bus 33 → walk pattern, matching the
-// Figma route screen. Replace with the real transport provider (ADR-0002).
+// Sample journey: a fixed walk → bus 45 → walk → bus 33 → walk pattern, matching the
+// Figma route screen. Used when real timetables (OpenTripPlanner, ADR-0002) are unavailable.
 
 const MINUTE = 60_000;
 
@@ -11,7 +11,7 @@ function between(a: Coordinates, b: Coordinates, t: number): Coordinates {
 
 type Mode = 'leaveAt' | 'arriveBy';
 
-export function planMockJourney(
+export function planSampleJourney(
   from: Coordinates,
   to: Coordinates,
   destination: { id: string; label: string },
@@ -34,10 +34,10 @@ export function planMockJourney(
 
   const points = [from, between(from, to, 0.05), between(from, to, 0.7), between(from, to, 0.72), between(from, to, 0.97), to];
   const details: Omit<JourneyLeg, 'mode' | 'from' | 'to' | 'departureTime' | 'arrivalTime'>[] = [
-    { instruction: 'Walk to the stop', stopName: 'Meadowsweet Avenue' },
-    { instruction: 'Bus 45', lineName: '45', towards: 'Moor Street Queensway', stopName: 'Moor Street Queensway (MS8)', stopsCount: 32 },
-    { instruction: 'Walk to the next stop', stopName: 'High Street (BS16)' },
-    { instruction: 'Bus 33', lineName: '33', towards: 'Six Ways Aston', stopName: 'Six Ways Aston', stopsCount: 9 },
+    { instruction: 'Walk to the stop', stopName: 'Meadowsweet Avenue', steps: ['Head west on Cowslip Cl', 'Turn left onto Shannon Rd', 'The stop is on the right'] },
+    { instruction: 'Bus 45', lineName: '45', towards: 'Moor Street Queensway', stopName: 'Moor Street Queensway (MS8)', stopsCount: 32, intermediateStops: ['Pershore St', 'Upper Dean Street'] },
+    { instruction: 'Walk to the next stop', stopName: 'High Street (BS16)', steps: ['Head southwest toward Carrs Ln', 'Turn right onto Carrs Ln', 'Turn right onto High St', 'The stop is on the left'] },
+    { instruction: 'Bus 33', lineName: '33', towards: 'Six Ways Aston', stopName: 'Six Ways Aston', stopsCount: 9, intermediateStops: ['Burlington St', 'Rodway Close'] },
     { instruction: `Walk to ${destination.label}` },
   ];
 

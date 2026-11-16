@@ -2,11 +2,12 @@ import { router, useLocalSearchParams } from 'expo-router';
 import { useState } from 'react';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
 import { cardStyle } from '@/components/JourneyRow';
+import { SourceNote } from '@/components/SourceNote';
 import { Button, Header, Screen } from '@/components/ui';
 import { useNow } from '@/hooks/useNow';
-import { useStartLocation } from '@/hooks/useStartLocation';
+import { useJourney } from '@/hooks/useJourney';
 import { useProfile } from '@/profile/ProfileContext';
-import { planMockJourney } from '@/services/mockJourneyPlanner';
+import type { Place } from '@/profile/types';
 import { palette, radius, type } from '@/theme';
 import { addMinutes, shortTime } from '@/utils/time';
 
@@ -27,15 +28,18 @@ export default function PlanTrip() {
   const { placeId } = useLocalSearchParams<{ placeId: string }>();
   const { profile } = useProfile();
   const place = profile?.places.find((p) => p.id === placeId);
+  if (!place) return null;
+  return <PlanTripForm place={place} />;
+}
+
+function PlanTripForm({ place }: { place: Place }) {
   const now = useNow();
-  const from = useStartLocation();
   const [when, setWhen] = useState<When>('now');
   const [chosen, setChosen] = useState(() => roundUpTo5(addMinutes(new Date(), 15)));
 
-  if (!place) return null;
-
   const time = when === 'now' ? now : chosen;
-  const journey = planMockJourney(from, place.location, place, time, when === 'arriveBy' ? 'arriveBy' : 'leaveAt');
+  const mode = when === 'arriveBy' ? 'arriveBy' : 'leaveAt';
+  const { journey, source, loading } = useJourney(place, time, mode);
 
   return (
     <Screen
@@ -51,7 +55,7 @@ export default function PlanTrip() {
           onPress={() =>
             router.push({
               pathname: '/route/[placeId]',
-              params: { placeId: place.id, time: time.toISOString(), mode: when === 'arriveBy' ? 'arriveBy' : 'leaveAt' },
+              params: { placeId: place.id, time: time.toISOString(), mode },
             })
           }
         />
@@ -89,6 +93,7 @@ export default function PlanTrip() {
         <Text style={[type.display, styles.ink]}>{shortTime(journey.startTime)}</Text>
         <Text style={[type.bodyBold, styles.ink]}>You will arrive at about {shortTime(journey.arrivalTime)}</Text>
       </View>
+      <SourceNote source={source} loading={loading} />
     </Screen>
   );
 }

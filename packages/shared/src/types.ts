@@ -38,6 +38,10 @@ export interface JourneyLeg {
   towards?: string;
   stopName?: string;
   stopsCount?: number;
+  /** Stops passed on a bus leg, in order (used to say "Get off in 3 stops"). */
+  intermediateStops?: string[];
+  /** Turn-by-turn steps on a walking leg ("Head west on Cowslip Cl"). */
+  steps?: string[];
 }
 
 export interface Journey {
@@ -65,6 +69,22 @@ export interface PlanJourneyRequest {
   childId: string;
   destinationId: string;
   from: Coordinates;
+}
+
+/** Free search used by the app's own places (Figma design: children save their own places). */
+export interface JourneySearchRequest {
+  from: Coordinates;
+  to: Coordinates;
+  destinationLabel: string;
+  /** ISO 8601. Defaults to now. */
+  time?: string;
+  arriveBy?: boolean;
+}
+
+export interface JourneySearchResponse {
+  journey: Journey;
+  /** 'live' = real timetables from OpenTripPlanner, 'sample' = mock fallback. */
+  source: 'live' | 'sample';
 }
 
 export interface ApiError {

@@ -11,7 +11,8 @@ if (useEmulators) {
 
 export const env = {
   port: Number(process.env.PORT ?? 4000),
-  tflAppKey: process.env.TFL_APP_KEY ?? '',
+  /** Self-hosted OpenTripPlanner (npm run otp), ADR-0002. */
+  otpUrl: process.env.OTP_URL ?? 'http://localhost:8090',
   useEmulators,
   firebaseProjectId: process.env.FIREBASE_PROJECT_ID ?? 'demo-journeybuddy',
   firebaseServiceAccountPath: process.env.FIREBASE_SERVICE_ACCOUNT_PATH ?? '',

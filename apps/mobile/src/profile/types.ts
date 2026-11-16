@@ -31,4 +31,6 @@ export interface ChildProfile {
   places: Place[];
   /** Place ids of recent trips, newest first ("Go again"). */
   recentTrips: string[];
+  /** Last bus summary per place, e.g. "Bus 45, then bus 33". */
+  tripSummaries?: Record<string, string>;
 }
