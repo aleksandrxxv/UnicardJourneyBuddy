@@ -1,0 +1,15 @@
+<svg preserveAspectRatio="none" overflow="visible" style="display: block;" width="160" height="160" viewBox="0 0 160 160" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g id="Avatar" clip-path="url(#clip0_0_22)">
+<path id="Vector" d="M80 160C124.183 160 160 124.183 160 80C160 35.8172 124.183 0 80 0C35.8172 0 0 35.8172 0 80C0 124.183 35.8172 160 80 160Z" fill="white"/>
+<path id="Vector_2" d="M80 134.4C106.51 134.4 128 112.91 128 86.4C128 59.8903 106.51 38.4 80 38.4C53.4903 38.4 32 59.8903 32 86.4C32 112.91 53.4903 134.4 80 134.4Z" fill="#F7C9A5"/>
+<path id="Vector_3" d="M32 80C28.8 38.4 57.6 22.4 83.2 22.4C108.8 22.4 134.4 41.6 128 80C118.4 60.8 102.4 54.4 80 54.4C57.6 54.4 41.6 60.8 32 80Z" fill="#0E2A25"/>
+<path id="Vector_4" d="M62.4 96C65.9346 96 68.8 93.1346 68.8 89.6C68.8 86.0654 65.9346 83.2 62.4 83.2C58.8654 83.2 56 86.0654 56 89.6C56 93.1346 58.8654 96 62.4 96Z" fill="#0E2A25"/>
+<path id="Vector_5" d="M97.6 96C101.135 96 104 93.1346 104 89.6C104 86.0654 101.135 83.2 97.6 83.2C94.0654 83.2 91.2 86.0654 91.2 89.6C91.2 93.1346 94.0654 96 97.6 96Z" fill="#0E2A25"/>
+<path id="Vector_6" d="M64 108.8C73.6 118.4 86.4 118.4 96 108.8" stroke-width="6.4" stroke-linecap="round" stroke="#0E2A25"/>
+</g>
+<defs>
+<clipPath id="clip0_0_22">
+<rect width="160" height="160" fill="white"/>
+</clipPath>
+</defs>
+</svg>

@@ -11,9 +11,11 @@
     "typecheck": "tsc -b"
   },
   "dependencies": {
+    "@journeybuddy/shared": "*",
+    "firebase": "^13.3.0",
     "react": "^19.3.1",
     "react-dom": "^19.3.1",
-    "@journeybuddy/shared": "*"
+    "react-router": "^7.18.5"
   },
   "devDependencies": {
     "@types/node": "^24.19.2",
