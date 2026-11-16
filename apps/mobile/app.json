@@ -30,7 +30,9 @@
         {
           "locationWhenInUsePermission": "Journey Buddy uses your location to plan your trip from where you are."
         }
-      ]
+      ],
+      "expo-font",
+      "expo-splash-screen"
     ],
     "experiments": {
       "typedRoutes": true

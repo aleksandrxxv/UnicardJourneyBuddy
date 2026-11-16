@@ -34,6 +34,8 @@ export interface JourneyLeg {
   departureTime: string; // ISO 8601
   arrivalTime: string; // ISO 8601
   lineName?: string;
+  /** Where the bus is heading, as shown on its front ("To Moor Street Queensway"). */
+  towards?: string;
   stopName?: string;
   stopsCount?: number;
 }

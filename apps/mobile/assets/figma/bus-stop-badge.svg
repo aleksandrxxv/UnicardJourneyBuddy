@@ -1,0 +1,19 @@
+<svg preserveAspectRatio="none" overflow="visible" style="display: block;" width="160" height="160" viewBox="0 0 160 160" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g id="Bus stop badge" clip-path="url(#clip0_0_4)">
+<path id="Vector" d="M80 160C124.183 160 160 124.183 160 80C160 35.8172 124.183 0 80 0C35.8172 0 0 35.8172 0 80C0 124.183 35.8172 160 80 160Z" fill="white"/>
+<path id="Vector_2" d="M105.6 32H54.4C45.5634 32 38.4 39.1634 38.4 48V105.6C38.4 114.437 45.5634 121.6 54.4 121.6H105.6C114.437 121.6 121.6 114.437 121.6 105.6V48C121.6 39.1634 114.437 32 105.6 32Z" fill="#F5A800" stroke-width="6.4" stroke="#0E2A25"/>
+<path id="Vector_3" d="M104 46.4H56C53.349 46.4 51.2 48.549 51.2 51.2V73.6C51.2 76.251 53.349 78.4 56 78.4H104C106.651 78.4 108.8 76.251 108.8 73.6V51.2C108.8 48.549 106.651 46.4 104 46.4Z" fill="white" stroke-width="4.8" stroke="#0E2A25"/>
+<g id="Vector_4">
+<path d="M80 46.4V78.4Z" fill="black"/>
+<path d="M80 46.4V78.4" stroke-width="4.8" stroke="#0E2A25"/>
+</g>
+<path id="Vector_5" d="M59.2 105.6C62.7346 105.6 65.6 102.735 65.6 99.2C65.6 95.6654 62.7346 92.8 59.2 92.8C55.6654 92.8 52.8 95.6654 52.8 99.2C52.8 102.735 55.6654 105.6 59.2 105.6Z" fill="#0E2A25"/>
+<path id="Vector_6" d="M100.8 105.6C104.335 105.6 107.2 102.735 107.2 99.2C107.2 95.6654 104.335 92.8 100.8 92.8C97.2654 92.8 94.4 95.6654 94.4 99.2C94.4 102.735 97.2654 105.6 100.8 105.6Z" fill="#0E2A25"/>
+<path id="Vector_7" d="M86.4 121.6H73.6V144H86.4V121.6Z" fill="#0E2A25"/>
+</g>
+<defs>
+<clipPath id="clip0_0_4">
+<rect width="160" height="160" fill="white"/>
+</clipPath>
+</defs>
+</svg>
