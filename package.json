@@ -17,7 +17,8 @@
     "emulators": "firebase emulators:start --project demo-journeybuddy",
     "otp:download": "bash otp/download.sh",
     "otp:build": "bash otp/build.sh",
-    "otp": "bash otp/serve.sh"
+    "otp": "bash otp/serve.sh",
+    "check:flow": "node apps/api/scripts/check-flow.mjs"
   },
   "engines": {
     "node": ">=22"

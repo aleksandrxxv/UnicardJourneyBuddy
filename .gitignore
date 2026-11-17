@@ -39,3 +39,6 @@ ui-debug.log
 otp/*.jar
 otp/data/*
 !otp/data/build-config.json
+
+# Personal portfolio drafts (not part of the Unicard code)
+portfolio/
